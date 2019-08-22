@@ -1,8 +1,9 @@
 var underScore = [];
 var chosenWord; // word bank (lootWord) array number = lootWord.[chosenWord]
 var lootWord; // word bank
-var hp = 0;
+var hp = 10;
 var wrongLetter = [];
+var userGuess // this is the usre's input or event.key
 
 // Create an Array of words
 var lootWord = ["oilyrags", "ancientsword", "holysymbol" ];
@@ -38,7 +39,28 @@ document.onkeyup = function(event) {
 
     var userGuess = event.key;
     console.log(userGuess);
+//looking for user guess in the index of chosenWord, if userGuess exists in index of chosenword value has to be over -1
+    if(chosenWord.indexOf(userGuess) > -1)
+    {
+        console.log("yes");
     }
+    //if user guess exists in chosenword - loop through
+    
+
+
+    else 
+    {
+        //else not above -1 pushing wrong "userGuess" to "wrongletter" array
+        wrongLetter.push(userGuess);
+        console.log(wrongLetter);
+        //pushing wrong letter to "wrongGuess" div
+        document.getElementById('wrongGuess').textContent = wrongLetter;
+        //subtract hp
+        hp--;
+        console.log(hp);
+    }
+
+}
 
 
 // Check users guess if right
