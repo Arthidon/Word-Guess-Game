@@ -34,7 +34,7 @@ console.log(underScore);
 
 
 // Get Users Guess
-document.onkeyup = 
+
 
 
 // Check users guess if right
