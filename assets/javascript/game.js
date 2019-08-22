@@ -34,7 +34,11 @@ console.log(underScore);
 
 
 // Get Users Guess
+document.onkeyup = function(event) {
 
+    var userGuess = event.key;
+    console.log(userGuess);
+    }
 
 
 // Check users guess if right
