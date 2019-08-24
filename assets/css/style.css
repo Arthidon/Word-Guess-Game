@@ -4,4 +4,9 @@
 }
 body {
 	background-color: blanchedalmond;
+	background-image: url(/wordgame/assets/images/background.jpg)
+}
+.container {
+	color: white;
+
 }
