@@ -3,12 +3,12 @@ var chosenWord; // word bank (lootWord) array number = lootWord.[chosenWord]
 var lootWord; // word bank
 var hp = 10;
 var wrongLetter = [];
+var nonDupWrong = []
 var correctLetter = [];
-var userGuess // this is the usre's input or event.key
+var userGuess; // this is the usre's input or event.key
 var winCounter = 0;
 // Create an Array of words
 var lootWord = ["oily rags", "ancient sword", "holy symbol" ];
-
 var chosenWord = start();
 
 
@@ -18,14 +18,13 @@ function start() {
 // Choose word randomly from array
 var chosenWord = Math.floor(Math.random() * lootWord.length);
 //chosenWord = array.index number
-var chosenWord = lootWord[chosenWord];
 
+var chosenWord = lootWord[chosenWord];
 
 //logs chosen word
 console.log(chosenWord);
 
 //underscores from chosen word will go here
-var underScore = [];
 
 // Create Underscores based on chosenword length
     for (var i = 0; i < chosenWord.length; i++) 
@@ -33,18 +32,18 @@ var underScore = [];
         //if chosen word [i] equals a space push a space to underscore, else push underscore
         if( chosenWord[i] === " ") 
         {
-            underScore.push(" ");
+            underScore[i] = " ";
         }
         else 
         {
-        underScore.push("_");
+            underScore[i] = "_ ";
         }
-
+        console.log(underScore[i]);
+        document.getElementById('pageunderscore').textContent += underScore[i];
     }
     //places underscores on HTML page > ID pageunderscore
-     document.getElementById('pageunderscore').textContent = underScore.join(" ");
 
-     console.log(underScore);
+    console.log(underScore);
     return chosenWord;
 
 }
@@ -55,19 +54,22 @@ var underScore = [];
 //win and lose function
 
  function winLose() {
-
-    if (winCounter === chosenWord.length) {
+    console.log(chosenWord);
+    console.log(document.getElementById('pageunderscore').innerHTML);
+    if (chosenWord == document.getElementById('pageunderscore').innerHTML) {
         alert("Yay Loot!");
+        winCounter++;
+        document.getElementById('score').textContent = winCounter;
+
+        location.reload();
         start();
+        
     }
     else if(hp === 0){
         alert('your dead :(...');
-        start();
+        location.reload();
     }
  }
-
-
-
 
 // Get Users Guess
 document.onkeyup = function(event) {
@@ -75,79 +77,68 @@ document.onkeyup = function(event) {
     var userGuess = event.key;
     //logs user guess
     console.log(userGuess);
+    console.log(underScore);
 
 
 //looking for user guess in the index of chosenWord, if userGuess exists in index of chosenword value has to be over -1
     if(chosenWord.indexOf(userGuess) > -1)
     {
-        
+        document.getElementById('pageunderscore').textContent = "";
         //logging yes if userGuess = something in the Index of chosen word
         console.log("yes");
 
             //if user guess exists in chosenword - loop through
-            for (var i = 0; i < chosenWord.length; i++) 
-        {
+            for (var i = 0; i < chosenWord.length; i++){
 
 
-
-    
-
+            // if( chosenWord[i] === " ") 
+            // {
+            //     underScore = (" ");
+            // }
+            // else 
+            // {
+            // underScore = ("_");
+            // }
+            
 
             //if index variable (i) of chosenWord = to userguess 
             if(chosenWord[i] === userGuess) 
             {
-                
                 //then go to index (i) of underScore and replace it with userGuess
+                
                 underScore[i] = userGuess;         
                 
-                
-                
                 //adds to win counter
-                winCounter++;
-                winLose();
                 
                 
-
+                
+                
                 //This pushes correct user guess to html ID "correctGuess"
                 correctLetter.push(userGuess);
                 document.getElementById('correctGuess').textContent = correctLetter.join(" ");
-        
+                
             }
-
-            //if chosen word [i] equals a space push a space to underscore, else push underscore
-            else if( chosenWord[i] === " ") 
-            {
-                underScore.push(" ");
-            }
-            else 
-            {
-            underScore.push("_");
-            } 
+            console.log(underScore);
+            document.getElementById('pageunderscore').textContent += underScore[i];
             
-    //placed underscore on page
-    document.getElementById('pageunderscore').textContent = underScore.join(" ");
-
-
+            
+            //placed underscore on page
+            
+            
         }
-
-
-
-
-    //shows correct guesses in underscore log
-    console.log(underScore);
-    
-
-
-
         
-    }
-
-
-    else
-    {
+          
+        //shows correct guesses in underscore log
+        console.log(underScore);
+        
+        
+    } else {
         //else not above -1 pushing wrong "userGuess" to "wrongletter" array
         wrongLetter.push(userGuess);
         console.log(wrongLetter);
+            
+
+
         //pushing wrong letter to "wrongGuess" div
         document.getElementById('wrongGuess').textContent = wrongLetter.join(" ");
         
@@ -155,11 +146,13 @@ document.onkeyup = function(event) {
         //subtract hp
         hp--;
         winLose();
-
+        
         console.log(hp);
         document.getElementById('hp').textContent = hp;
     }
-
+    
+    winLose();
+    
 }
 
 
